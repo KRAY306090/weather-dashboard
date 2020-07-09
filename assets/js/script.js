@@ -1,6 +1,10 @@
 var searchBoxEl = document.querySelector("#searchBar");
 var cityNameEl = document.querySelector("#city");
 var tempEl = document.querySelector("#temp");
+var humidityEl = document.querySelector("#humidity");
+var windEl = document.querySelector("#wind");
+var now = moment().format("(MM/DD/YYYY)");
+
 
 var getWeather = function() {
     var city = searchBoxEl.value.trim();
@@ -9,11 +13,19 @@ var getWeather = function() {
     )
     .then(response => response.json())
     .then(data => {
+        console.log(data)
         var nameVal = data["name"]
         var tempVal = data["main"]["temp"]
+        var humidityVal = data["main"]["humidity"]
+        var windVal = data["wind"]["speed"]
+        //var UV = data[]
+    
+        //var iconVal = data["weather"]["0"]["icon"]
 
-        cityNameEl.innerHTML = nameVal;
-        tempEl.innerHTML = tempVal;
+        cityNameEl.innerHTML = nameVal + " " + now; //+ " " + iconVal;
+        tempEl.innerHTML = "Temperature: " + tempVal + "\u00B0" ;
+        humidityEl.innerHTML ="Humidity: " + humidityVal + "%";
+        windEl.innerHTML = "Wind Speed: " + windVal + "mph";
     })
     .catch(err => alert("City not found"))
       
