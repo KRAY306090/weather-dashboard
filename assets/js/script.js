@@ -5,8 +5,18 @@ var humidityEl = document.querySelector("#humidity");
 var windEl = document.querySelector("#wind");
 var now = moment().format("(MM/DD/YYYY)");
 
+var getForecast = function(city) {
+    fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=a6f5e2eac18b62704a90a174201285a8`
+    )
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+    })
+};
 
 var getWeather = function() {
+    
     var city = searchBoxEl.value.trim();
     fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=a6f5e2eac18b62704a90a174201285a8`
@@ -21,13 +31,15 @@ var getWeather = function() {
         //var UV = data[]
     
         //var iconVal = data["weather"]["0"]["icon"]
+        
 
         cityNameEl.innerHTML = nameVal + " " + now; //+ " " + iconVal;
         tempEl.innerHTML = "Temperature: " + tempVal + "\u00B0" ;
         humidityEl.innerHTML ="Humidity: " + humidityVal + "%";
         windEl.innerHTML = "Wind Speed: " + windVal + "mph";
+        document.querySelector("#card").style.display = "block";
     })
-    .catch(err => alert("City not found"))
-      
+    .catch(err => alert("City not found"));
+    getForecast(city);
 };
 
