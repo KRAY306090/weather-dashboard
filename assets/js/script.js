@@ -14,6 +14,12 @@ var getForecast = function(city) {
         console.log(data)
     })
     for (i = 1; i <= 5; i++) {
+        var date = data["list"][i]["dt_txt"];
+        var description = data["list"][i]["weather"]["0"]["description"];
+        var temp = data["list"][i]["main"]["temp"];
+        var humidity = data["list"][i]["main"]["humidity"];
+
+        
         
     }
    
