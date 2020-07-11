@@ -13,6 +13,10 @@ var getForecast = function(city) {
     .then(data => {
         console.log(data)
     })
+    for (i = 1; i <= 5; i++) {
+        
+    }
+   
 };
 
 var getWeather = function() {
