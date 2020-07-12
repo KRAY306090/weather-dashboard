@@ -5,6 +5,19 @@ var humidityEl = document.querySelector("#humidity");
 var windEl = document.querySelector("#wind");
 var now = moment().format("(MM/DD/YYYY)");
 var forecastContainerEl = document.querySelector("#forecast");
+var getUV = function(lat, long) {
+    
+    fetch(
+        `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${long}&appid=a6f5e2eac18b62704a90a174201285a8`
+    )
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        var index = data["value"];
+        console.log(index);
+    })
+};
+
 var getForecast = function (city) {
     fetch(
         `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=a6f5e2eac18b62704a90a174201285a8`
@@ -12,12 +25,13 @@ var getForecast = function (city) {
         .then(response => response.json())
         .then(data => {
             console.log(data)
+            
 
             for (var i = 0; i < data.list.length; i++) {
 
                 if (data.list[i].dt_txt.indexOf("15:00:00") !== -1 ) {
 
-                    console.log(data.list[i]);
+                    //console.log(data.list[i]);
                     //var date = data["list"][i]["dt_txt"];
                     var date = new Date(data.list[i].dt_txt).toLocaleDateString();
                     var description = data["list"][i]["weather"]["0"]["description"];
@@ -29,11 +43,19 @@ var getForecast = function (city) {
                     newCard.setAttribute("class", "card bg-primary text-white");
                     newCard.innerHTML = "<div class='card-body'><h5 class='card-title'>" + date + "</h5><img src='http://openweathermap.org/img/w/'" + icon + "'.png'/><p class='card-text'>Temp: " + temp + "</p><p class='card-text'>Humidity: " + humidity + "%</p></div>";
                     forecastContainerEl.appendChild(newCard);
-
+                    
+                    
                 }
 
             }
+            var lat = data["city"]["coord"]["lat"];
+            var long = data["city"]["coord"]["lon"];
+            getUV(lat,long);
+                    
         })
+       
+        
+        
 };
 
 var getWeather = function () {
