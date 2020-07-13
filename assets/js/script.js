@@ -5,6 +5,7 @@ var humidityEl = document.querySelector("#humidity");
 var windEl = document.querySelector("#wind");
 var now = moment().format("(MM/DD/YYYY)");
 var forecastContainerEl = document.querySelector("#forecast");
+var currentWeatherEl = document.querySelector("#todayWeather");
 var getUV = function(lat, long) {
     
     fetch(
@@ -75,17 +76,37 @@ var getWeather = function () {
             //var iconImg = document.createElement("img");
             //iconImg.setAttribute("src", "http://openweathermap.org/img/w/03n.png" )
             //iconVal.setAttribute("src", "http://openweathermap.org/img/w/" + data.[0].icon + ".png" )
-
             //var UV = data[]
+            var weatherCard = document.createElement("div");
+            weatherCard.setAttribute("class", "card mx-auto");
+            currentWeatherEl.appendChild(weatherCard);
+
+            var cityName =document.createElement("h2");
+            cityName.innerHTML = nameVal + " " + now;
+            var weatherIcon = document.createElement("img");
+            weatherIcon.setAttribute("src", "http://openweathermap.org/img/w/" + iconVal + ".png");
+            weatherIcon.setAttribute("width", "75px");
+            var temperature = document.createElement("p");
+            temperature.innerHTML = "Temperature: " + tempVal + "\u00B0";
+            var humid = document.createElement("p");
+            humid.innerHTML = "Humidity: " + humidityVal + "%";
+            var windSpeed = document.createElement("p");
+            windSpeed.innerHTML = "Wind Speed: " + windVal + " mph";
+            
+            weatherCard.appendChild(cityName);
+            weatherCard.appendChild(weatherIcon);
+            weatherCard.appendChild(temperature);
+            weatherCard.appendChild(humid);
+            weatherCard.appendChild(windSpeed);
 
             
 
 
-            cityNameEl.innerHTML = nameVal + " " + now; //+ " " + iconImg;
+            /*cityNameEl.innerHTML = nameVal + " " + now; //+ " " + iconImg;
             tempEl.innerHTML = "Temperature: " + tempVal + "\u00B0";
             humidityEl.innerHTML = "Humidity: " + humidityVal + "%";
             windEl.innerHTML = "Wind Speed: " + windVal + "mph";
-            
+            */
             //document.querySelector("#card").style.display = "block";
         })
         .catch(err => alert("City not found"));
