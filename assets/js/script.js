@@ -2,6 +2,7 @@ var searchBoxEl = document.querySelector("#searchBar");
 var now = moment().format("(MM/DD/YYYY)");
 var forecastContainerEl = document.querySelector("#forecast");
 var currentWeatherEl = document.querySelector("#todayWeather");
+var memoryGroupEl = document.querySelector("#memory");
 var getUV = function(lat, long) {
     fetch(
         `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${long}&appid=a6f5e2eac18b62704a90a174201285a8`
@@ -54,7 +55,8 @@ var getForecast = function (city) {
         }) 
 };
 var getWeather = function () {
-
+    forecastContainerEl.innerHTML = "";
+    currentWeatherEl.innerHTML = "";
     var city = searchBoxEl.value.trim();
     fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=a6f5e2eac18b62704a90a174201285a8`
@@ -69,6 +71,11 @@ var getWeather = function () {
             var windVal = data["wind"]["speed"]
             var iconVal = data["weather"]["0"]["icon"]
             var weatherCard = document.createElement("div");
+            //adds to search history
+            var newList = document.createElement("li");
+            newList.setAttribute("class", "list-group-item");
+            newList.innerHTML = nameVal;
+            memoryGroupEl.appendChild(newList);
             //creates card to hold current weather data
             weatherCard.setAttribute("class", "card mx-auto");
             currentWeatherEl.appendChild(weatherCard);
@@ -92,6 +99,8 @@ var getWeather = function () {
             weatherCard.appendChild(windSpeed);
         })
         .catch(err => alert("City not found"));
+        searchBoxEl.textContent = "";
+
     getForecast(city);
 };
 
