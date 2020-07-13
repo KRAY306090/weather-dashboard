@@ -11,7 +11,21 @@ var getUV = function(lat, long) {
     .then(data => {
         console.log(data);
         var index = data["value"];
-        console.log(index);
+        if (index >= 8) {
+            var indexBox = document.createElement("p");
+            indexBox.innerHTML = "UV index: <span class='bg-danger txt-white'>" + index + "</span>";
+            currentWeatherEl.appendChild(indexBox);
+        }
+        else if (index >= 3) {
+            var indexBox = document.createElement("p");
+            indexBox.innerHTML = "UV index: <span class='bg-warning txt-white'>" + index + "</span>";
+            currentWeatherEl.appendChild(indexBox);
+        }
+        else {
+            var indexBox = document.createElement("p");
+            indexBox.innerHTML = "UV index: <span class='bg-success txt-white'>" + index + "</span>";
+            currentWeatherEl.appendChild(indexBox);
+        }
     })
 };
 var getForecast = function (city) {
@@ -64,7 +78,7 @@ var getWeather = function () {
     )
         .then(response => response.json())
         .then(data => {
-            searchBoxEl.innerHTML = "";
+            
             console.log(data);
             //variables that hold the values of the current weather data
             var nameVal = data["name"]
@@ -101,8 +115,6 @@ var getWeather = function () {
             weatherCard.appendChild(windSpeed);
         })
         .catch(err => alert("City not found"));
-        
-
     getForecast(city);
 };
 
