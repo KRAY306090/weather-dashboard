@@ -57,12 +57,14 @@ var getForecast = function (city) {
 var getWeather = function () {
     forecastContainerEl.innerHTML = "";
     currentWeatherEl.innerHTML = "";
+    
     var city = searchBoxEl.value.trim();
     fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=a6f5e2eac18b62704a90a174201285a8`
     )
         .then(response => response.json())
         .then(data => {
+            searchBoxEl.innerHTML = "";
             console.log(data);
             //variables that hold the values of the current weather data
             var nameVal = data["name"]
@@ -99,7 +101,7 @@ var getWeather = function () {
             weatherCard.appendChild(windSpeed);
         })
         .catch(err => alert("City not found"));
-        searchBoxEl.textContent = "";
+        
 
     getForecast(city);
 };
