@@ -3,6 +3,7 @@ var now = moment().format("(MM/DD/YYYY)");
 var forecastContainerEl = document.querySelector("#forecast");
 var currentWeatherEl = document.querySelector("#todayWeather");
 var memoryGroupEl = document.querySelector("#memory");
+var memoryArr = [];
 var getUV = function(lat, long) {
     fetch(
         `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${long}&appid=a6f5e2eac18b62704a90a174201285a8`
@@ -73,6 +74,10 @@ var getWeather = function () {
     currentWeatherEl.innerHTML = "";
     
     var city = searchBoxEl.value.trim();
+    // local storage
+    memoryArr.push(city);
+    var JSONlist = JSON.stringify(memoryArr);
+    localStorage.setItem("memoryArr", JSONlist);
     fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=a6f5e2eac18b62704a90a174201285a8`
     )
